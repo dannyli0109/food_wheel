@@ -1,0 +1,5 @@
+CREATE TABLE users(
+  id SERIAL4 PRIMARY KEY,
+  email VARCHAR(400) UNIQUE NOT NULL,
+  password_digest TEXT NOT NULL
+);
