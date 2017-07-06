@@ -1,0 +1,38 @@
+
+<!-- <p><%= @results%></p> -->
+<% names = [] %>
+<% coordinates = [] %>
+<% vicinities = []%>
+<% place_ids = [] %>
+<% @results.each do |result| %>
+  <% names.push(result["name"]) %>
+  <% coordinates.push([result["geometry"]["location"]["lat"],result["geometry"]["location"]["lng"]]) %>
+  <% vicinities.push(result["vicinity"]) %>
+  <% place_ids.push(result["place_id"]) %>
+
+<% end %>
+<div class="container text-center">
+<div id="roulette"></div>
+
+<form id="lets_go" action="/places" method="get">
+  <input id="name" type="hidden" name="name">
+  <input class="coordinate" type="hidden" name="place_lat">
+  <input class="coordinate" type="hidden" name="place_lon">
+  <input id="vicinity" type="hidden" name="vicinity">
+  <input id="place" type="hidden" name="place_id">
+</form>
+
+</div>
+<script>
+var items = <%= names %>;
+var coordinates = <%= coordinates %>;
+var vicinities = <%= vicinities %>;
+var placeIds = <%= place_ids %>;
+</script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.9/p5.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.9/addons/p5.dom.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.9/addons/p5.sound.min.js"></script>
+<script src="/javascripts/cell.js"></script>
+<script src="/javascripts/app.js"></script>

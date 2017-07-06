@@ -1,11 +1,18 @@
 require 'sinatra'
 require "sinatra/reloader"
 require "pry"
+require 'httparty'
+
 
 require_relative "db_config"
 require_relative "models/user"
+require_relative "models/place"
+require_relative "models/visit"
+
 
 enable :sessions
+
+google_api_key = ENV["google_address_api_key"]
 
 helpers do
   def logged_in?
@@ -13,7 +20,7 @@ helpers do
   end
 
   def current_user
-    User.find(id: session[:user_id])
+    User.find_by(id: session[:user_id])
   end
 end
 
@@ -21,8 +28,21 @@ get '/' do
   erb :index
 end
 
+get '/places' do
+  # @places =
+  binding.pry
+  erb :places
+end
+
 get '/users/new' do
   erb :sign_up
+end
+
+get '/roulette' do
+  @current_latitude = params[:current_latitude]
+  @current_longitude = params[:current_longitude]
+  @results = HTTParty.get("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{params[:current_latitude]},#{params[:current_longitude]}&radius=500&type=restaurant&keyword=cruise&key=#{google_api_key}").parsed_response["results"]
+  erb :roulette
 end
 
 post '/users' do
@@ -51,8 +71,16 @@ end
 
 post "/session" do
   user = User.find_by(email: params[:email])
-  if user && u.authenticate(params[:password])
+  if user && user.authenticate(params[:password])
     session[:user_id] = user.id
     redirect "/"
+  else
+    @error_message = "Email or password incorrect"
+    erb :login
   end
+end
+
+delete "/session" do
+  session[:user_id] = nil
+  redirect "/"
 end

@@ -11,10 +11,48 @@
 
 <% end %>
 
+
+
+<script>
+  var options = {
+    enableHighAccuracy: true,
+    timeout: 5000,
+    maximumAge: 0
+  };
+
+  function success(pos) {
+    var crd = pos.coords;
+    var current_latitude = document.querySelector("#current_latitude")
+    var current_longitude = document.querySelector("#current_longitude")
+
+    var getStartBtn = document.querySelector("#getStartBtn")
+
+    current_latitude.value = crd.latitude
+    current_longitude.value = crd.longitude
+
+    console.log('Your current position is:');
+    console.log(`Latitude : ${crd.latitude}`);
+    console.log(`Longitude: ${crd.longitude}`);
+    console.log(`More or less ${crd.accuracy} meters.`);
+    getStartBtn.disabled = false
+  };
+
+  function error(err) {
+    console.warn(`ERROR(${err.code}): ${err.message}`);
+  };
+
+  navigator.geolocation.getCurrentPosition(success, error, options);
+</script>
+
+
 <div class="jumbotron text-center">
   <div class="container">
-    <h1>Welcome To My Website</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-    <a href="/" class="btn btn-primary">Read Mode</a>
+    <h3>Don't know what to eat?</h3>
+    <p>Let us decide for you</p>
+    <form action="/roulette" method="get">
+      <input id="current_latitude" name="current_latitude" type="hidden">
+      <input id="current_longitude" name="current_longitude" type="hidden">
+      <button id="getStartBtn" class="btn btn-primary" disabled>Get started</button>
+    </form>
   </div>
 </div>
