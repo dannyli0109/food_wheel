@@ -1,15 +1,6 @@
+<% session[:last_url] = request.fullpath%>
 
-<% if @message %>
-<div class="container">
-  <div class="alert alert-success alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert">
-      <span>&times;</span>
-    </button>
-    <%= @message %>
-  </div>
-</div>
 
-<% end %>
 
 
 
@@ -34,6 +25,7 @@
     console.log(`Latitude : ${crd.latitude}`);
     console.log(`Longitude: ${crd.longitude}`);
     console.log(`More or less ${crd.accuracy} meters.`);
+
     getStartBtn.disabled = false
   };
 
@@ -47,12 +39,14 @@
 
 <div class="jumbotron text-center">
   <div class="container">
+    <h1>Food Wheel</h1>
     <h3>Don't know what to eat?</h3>
     <p>Let us decide for you</p>
+
     <form action="/roulette" method="get">
       <input id="current_latitude" name="current_latitude" type="hidden">
       <input id="current_longitude" name="current_longitude" type="hidden">
-      <button id="getStartBtn" class="btn btn-primary" disabled>Get started</button>
+      <button id="getStartBtn" class="btn btn-primary btn-lg" disabled>Get started</button>
     </form>
   </div>
 </div>

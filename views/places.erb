@@ -1,10 +1,82 @@
-<div class="container">
-  <table class="table table-striped table-bordered table-hover table-condensed">
-    <tr>
-      <% @place.each do |key,value| %>
-      <th> <%= key %> </th>
-      <% end %>
-    </tr>
-  </table>
+<% session[:last_url] = request.fullpath%>
 
+<div class="container">
+  <% @place.each do |key,value| %>
+  <% %>
+  <% end %>
+  <h2 class="page-header"><%= @place["name"]%><small> <%=@place["vicinity"]%></small></h2>
+  <div class="row">
+    <div class="col-md-6">
+      <ul class="list-group">
+        <li class="list-group-item active">Opening Hours</li>
+        <% if @result["opening_hours"]%>
+        <% @result["opening_hours"]["weekday_text"].each do |row| %>
+        <li class="list-group-item"><%= row%></li>
+        <% end %>
+        <% else %>
+        <li class="list-group-item">Not provided</li>
+        <% end %>
+
+      </ul>
+
+
+      <% if session[:user_id] %>
+        <form action="/visits" method="post">
+          <a class = "btn btn-danger" style="width:49%;" href="javascript:history.back()"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> Get another one</a>
+          <input type="hidden" name="place_id" value="<%= @result["place_id"]%>">
+          <button class = "btn btn-success" style="width:49%;"><span class="glyphicon glyphicon-flag" aria-hidden="true"></span> Tag this restaurant</button>
+        </form>
+
+      <% else %>
+        <a class = "btn btn-danger" style="width:49%;" href="javascript:history.back()"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> Get another one</a>
+      <button class = "btn btn-success" style="width:49%;" disabled><span class="glyphicon glyphicon-flag" aria-hidden="true"></span> Log in to tag</button>
+      <% end %>
+      <hr>
+    </div>
+  <div class="col-md-6">
+    <div id="map" style="width: 100%"></div>
+  </div>
 </div>
+</div>
+
+<div class="container">
+  <h4 class="page-header">Gallery</h4>
+
+  <% @photos.each do |photo_group| %>
+  <div class="row">
+    <% photo_group.each do |photo| %>
+    <div class="col-sm-4">
+      <img class="img-responsive center-block" src="<%= photo%>" alt="Responsive image" style="height: 200px;">
+      <hr>
+
+    </div>
+    <% end %>
+  </div>
+
+
+  <% end %>
+
+  <style>
+  #map {
+    height: 400px;
+    width: 100%;
+  }
+  </style>
+
+
+  <script>
+  function initMap() {
+    var placeMarker = {lat: <%= @place["place_lat"]%>, lng: <%= @place["place_lon"]%>};
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 16,
+      center: placeMarker
+    });
+    var marker = new google.maps.Marker({
+      position: placeMarker,
+      map: map
+    });
+  }
+  </script>
+  <script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyZQzt5po_uluzQYBD7sXvE8V4sEp_gCc&callback=initMap">
+  </script>

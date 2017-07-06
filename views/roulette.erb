@@ -1,3 +1,4 @@
+<% session[:last_url] = request.fullpath%>
 
 <!-- <p><%= @results%></p> -->
 <% names = [] %>
@@ -14,7 +15,7 @@
 <div class="container text-center">
 <div id="roulette"></div>
 
-<form id="lets_go" action="/places" method="get">
+<form id="lets_go" action="/places" method="post">
   <input id="name" type="hidden" name="name">
   <input class="coordinate" type="hidden" name="place_lat">
   <input class="coordinate" type="hidden" name="place_lon">
