@@ -18,3 +18,5 @@ CREATE TABLE visits(
   place_id INTEGER,
   user_id INTEGER
 );
+
+pg_dump -Fc --no-acl --no-owner -h localhost -U xiaohaoli wheel_db > db.dump
