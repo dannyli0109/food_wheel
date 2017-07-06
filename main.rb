@@ -29,8 +29,18 @@ get '/' do
 end
 
 get '/places' do
-  # @places =
-  binding.pry
+  @place = Place.new
+  @place.name = params[:name]
+  @place.vicinity = params[:vicinity]
+  @place.place_lat = params[:place_lat]
+  @place.place_lon = params[:place_lon]
+  @place.place_id = params[:place_id]
+  if @place.valid?
+    @place.save
+  else
+    @place = Place.find_by(place_id: params[:place_id])
+  end
+  @place = @place.attributes
   erb :places
 end
 

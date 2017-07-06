@@ -10,7 +10,7 @@ CREATE TABLE places(
   vicinity TEXT,
   name VARCHAR(400),
   place_lat FLOAT,
-  place_lng FLOAT
+  place_lon FLOAT
 );
 
 CREATE TABLE visits(
