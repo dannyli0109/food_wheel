@@ -22,5 +22,4 @@ CREATE TABLE visits(
 
 pg_dump -Fc --no-acl --no-owner -h localhost -U xiaohaoli wheel_db > db.dump
 https://github.com/dannyli0109/food_wheel/raw/master/db.dump
-heroku pg:backups:restore 'https://github.com/dannyli0109/food_wheel/raw/master/db.dump
-' DATABASE_URL
+heroku pg:backups:restore 'https://github.com/dannyli0109/food_wheel/raw/master/db.dump' DATABASE_URL
