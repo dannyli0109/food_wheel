@@ -1,4 +1,4 @@
-##Planning
+## Planning
 - #### Ideas
   - ~~boardgame meetup app~~
   - restaurant picker
@@ -7,7 +7,7 @@
 - #### flow
   - see flow.pdf
 
-##How to use
+## How to use
 - This app require user to provide their locational informations
 - spin the wheel to get a random place
 - then you can tag it or get another one
