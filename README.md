@@ -13,9 +13,10 @@ places
   | id | name     |vicinity|place_lat|place_lon|place_id
   |--- |--- |---|---|---|---|
   | 1| name of restaurant  | address|-32|140|google place id
+
 visits
 |id| createion_time | place_id  | user_id|
-|--- |--- |---|---
+|--- |--- |---|---|
 | 1 | 2017-07-07 12:59 | refers to place table|refers to the users table|
 ---
 ##How to use
