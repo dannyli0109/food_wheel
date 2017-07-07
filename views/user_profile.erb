@@ -11,7 +11,7 @@
         <th>Last visit</th>
       </tr>
       <% @visits.each do |visit| %>
-      <tr>
+      <tr class="visit_row">
         <td><a href="/places/<%=visit["place_id"]%>"><%= Place.find(visit["place_id"])["name"]%></a></td>
         <td><%= Place.find(visit["place_id"])["vicinity"]%></td>
         <td><%= calculate_duration(visit["visit_date"])%></td>
@@ -36,6 +36,7 @@
 
 <script>
 // var places = <%= @places%>;
+var visitRows = document.querySelectorAll(".visit_row")
 function initMap() {
   var placeMarker = {lat: -37.8136, lng: 144.9631};
   var map = new google.maps.Map(document.getElementById('map'), {
@@ -47,24 +48,31 @@ function initMap() {
   //   map: map
   // });
   // var places = <%= @places%>
+  var index = 0
+  var infowindow = new google.maps.InfoWindow();
   <% @places.each do |place| %>
   var marker = new google.maps.Marker({
     position: {lat: <%= place["place_lat"]%>, lng: <%= place["place_lon"]%>},
     map: map
   });
   map.center = marker.position
-  attachSecretMessage(marker, "<%= place["name"]%>")
+  attachSecretMessage(marker, "<%= place["name"]%>", index, infowindow)
+  index ++;
   <% end %>
 
  }
 
- function attachSecretMessage(marker, secretMessage) {
-  var infowindow = new google.maps.InfoWindow({
-    content: secretMessage
-  });
+ function attachSecretMessage(marker, secretMessage,index, infowindow) {
+
 
   marker.addListener('click', function() {
+    for (var i = 0; i < visitRows.length; i++) {
+      visitRows[i].className = "visit_row"
+    }
+    visitRows[index].className = "visit_row success"
+    infowindow.setContent(secretMessage)
     infowindow.open(marker.get('map'), marker);
+
   });
 }
 </script>

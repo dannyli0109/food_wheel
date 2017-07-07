@@ -189,9 +189,9 @@ function mouseReleased() {
   if (!finishSpinning) {
     if (startingPos) {
       if (dist(mouseX,mouseY,startingPos[0],startingPos[1]) > 30) {
-        spinAccerlerate += random(0.1,0.25)
+        spinAccerlerate += random(0.1,1.2)
       }
-      spinReduce = 0.99
+      spinReduce = random(0.99, 0.995)
       startingPos = null
     }
   }

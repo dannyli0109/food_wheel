@@ -11,3 +11,14 @@
    width: 100%;
    z-index: -1;
 }
+
+
+html,body {
+  height:100%;
+}
+
+.jumbotron {
+  padding-top: 30vh;
+  height:100%;
+  background-color: white;
+}

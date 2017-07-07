@@ -108,6 +108,7 @@ post '/users' do
   if user.valid?
     session[:message] = "Successfully registered"
     user.save
+    session[:user_id] = user.id
     if session[:last_url]
       redirect session[:last_url]
     else
@@ -149,6 +150,8 @@ end
 
 delete "/session" do
   session[:user_id] = nil
+  session[:message] = "Logged out."
+  session[:last_url] = nil
   redirect "/"
 end
 
@@ -171,6 +174,7 @@ get "/users/:id" do
     end
     erb :user_profile
   else
+    session[:message] = "Please log in!"
     redirect "/"
   end
 end
